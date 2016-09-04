@@ -13,8 +13,6 @@
 		51041A2A1D7BC8EC0098F1CC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51041A291D7BC8EC0098F1CC /* Images.xcassets */; };
 		51041A2D1D7BC8EC0098F1CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51041A2B1D7BC8EC0098F1CC /* LaunchScreen.xib */; };
 		51041A391D7BC8EC0098F1CC /* LBS_RecommendTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 51041A381D7BC8EC0098F1CC /* LBS_RecommendTests.m */; };
-		51041A441D7C481C0098F1CC /* myAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 51041A431D7C481C0098F1CC /* myAnnotation.m */; };
-		51041A471D7C4F520098F1CC /* myAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51041A461D7C4F520098F1CC /* myAnnotationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,10 +38,6 @@
 		51041A321D7BC8EC0098F1CC /* LBS_RecommendTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LBS_RecommendTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51041A371D7BC8EC0098F1CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51041A381D7BC8EC0098F1CC /* LBS_RecommendTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LBS_RecommendTests.m; sourceTree = "<group>"; };
-		51041A421D7C481C0098F1CC /* myAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myAnnotation.h; sourceTree = "<group>"; };
-		51041A431D7C481C0098F1CC /* myAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myAnnotation.m; sourceTree = "<group>"; };
-		51041A451D7C4F520098F1CC /* myAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myAnnotationView.h; sourceTree = "<group>"; };
-		51041A461D7C4F520098F1CC /* myAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myAnnotationView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +83,6 @@
 				51041A211D7BC8EC0098F1CC /* AppDelegate.m */,
 				51041A231D7BC8EC0098F1CC /* ViewController.h */,
 				51041A241D7BC8EC0098F1CC /* ViewController.m */,
-				51041A421D7C481C0098F1CC /* myAnnotation.h */,
-				51041A431D7C481C0098F1CC /* myAnnotation.m */,
-				51041A451D7C4F520098F1CC /* myAnnotationView.h */,
-				51041A461D7C4F520098F1CC /* myAnnotationView.m */,
 				51041A291D7BC8EC0098F1CC /* Images.xcassets */,
 				51041A2B1D7BC8EC0098F1CC /* LaunchScreen.xib */,
 				51041A1C1D7BC8EC0098F1CC /* Supporting Files */,
@@ -227,8 +217,6 @@
 			files = (
 				51041A251D7BC8EC0098F1CC /* ViewController.m in Sources */,
 				51041A221D7BC8EC0098F1CC /* AppDelegate.m in Sources */,
-				51041A471D7C4F520098F1CC /* myAnnotationView.m in Sources */,
-				51041A441D7C481C0098F1CC /* myAnnotation.m in Sources */,
 				51041A1F1D7BC8EC0098F1CC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +404,7 @@
 				51041A3E1D7BC8EC0098F1CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		51041A3F1D7BC8EC0098F1CC /* Build configuration list for PBXNativeTarget "LBS_RecommendTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +413,7 @@
 				51041A411D7BC8EC0098F1CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

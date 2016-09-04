@@ -15,6 +15,7 @@
 		51041A391D7BC8EC0098F1CC /* LBS_RecommendTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 51041A381D7BC8EC0098F1CC /* LBS_RecommendTests.m */; };
 		51041A441D7C481C0098F1CC /* myAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 51041A431D7C481C0098F1CC /* myAnnotation.m */; };
 		51041A471D7C4F520098F1CC /* myAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51041A461D7C4F520098F1CC /* myAnnotationView.m */; };
+		51041A491D7C59EA0098F1CC /* mapIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 51041A481D7C59EA0098F1CC /* mapIndicator.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		51041A431D7C481C0098F1CC /* myAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myAnnotation.m; sourceTree = "<group>"; };
 		51041A451D7C4F520098F1CC /* myAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myAnnotationView.h; sourceTree = "<group>"; };
 		51041A461D7C4F520098F1CC /* myAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myAnnotationView.m; sourceTree = "<group>"; };
+		51041A481D7C59EA0098F1CC /* mapIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapIndicator.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		51041A1B1D7BC8EC0098F1CC /* LBS_Recommend */ = {
 			isa = PBXGroup;
 			children = (
+				51041A481D7C59EA0098F1CC /* mapIndicator.png */,
 				51041A201D7BC8EC0098F1CC /* AppDelegate.h */,
 				51041A211D7BC8EC0098F1CC /* AppDelegate.m */,
 				51041A231D7BC8EC0098F1CC /* ViewController.h */,
@@ -207,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51041A2D1D7BC8EC0098F1CC /* LaunchScreen.xib in Resources */,
+				51041A491D7C59EA0098F1CC /* mapIndicator.png in Resources */,
 				51041A2A1D7BC8EC0098F1CC /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import <MapKit/MapKit.h>
+#import "myAnnotation.h"
+#import "myAnnotationView.h"
 
 @interface ViewController ()<MKMapViewDelegate>
 
@@ -38,7 +40,7 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(39.877492, 116.486297), 2000, 2000);
     [mapView setRegion:[mapView regionThatFits:region]];//regionThatFits 使得地图更加适合屏幕
     
-    //地图标注
+ /*   //地图标注
     CLLocationCoordinate2D coordinate2D = CLLocationCoordinate2DMake(39.877492, 116.486297);
     CLLocationCoordinate2D coordinate2d = CLLocationCoordinate2DMake(39.891103, 116.486554);
 //    CLLocationCoordinate2D  coordinate2D;
@@ -58,32 +60,64 @@
     NSArray *pointAnnotations = @[pointAnnotation1,pointAnnotation2];
     [mapView addAnnotations:pointAnnotations];
     [mapView selectAnnotation:pointAnnotation1 animated:YES];//无需点击大头针  就显示气泡 
+  */
+    CLLocationCoordinate2D Coordinate2D  = CLLocationCoordinate2DMake(39.877492, 116.486297);
+    myAnnotation *MYAnnotation = [[myAnnotation alloc]initWithCoordinate2D:Coordinate2D];
+//    [MYAnnotation setTitle:@"我的位置"];
+//    [MYAnnotation setSubtitle:@"我的位置说明"];
+    [mapView addAnnotation:MYAnnotation];
 }
 
 //通过代理设置地图标注（大头针）属性
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    //如果创建多个大头针 通过代理进行优化 减少内存占用空间
+//    //如果创建多个大头针 通过代理进行优化 减少内存占用空间
+//    static NSString *PID = @"pid";
+//    MKPinAnnotationView *pinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:PID];
+//    if (!pinAnnotationView) {
+//        pinAnnotationView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:PID];
+//        
+//        [pinAnnotationView setPinColor:MKPinAnnotationColorGreen];//大头针颜色
+//        [pinAnnotationView setAnimatesDrop:YES];//大头针下落效果
+//        [pinAnnotationView setCanShowCallout:YES];//设置大头针气泡可以显示
+//    }
+//    //MKPinAnnotationView *pinAnnotationView = [[MKPinAnnotationView alloc]init];
+//   /* [pinAnnotationView setPinColor:MKPinAnnotationColorGreen];//大头针颜色
+//    [pinAnnotationView setAnimatesDrop:YES];//大头针下落效果
+//    [pinAnnotationView setCanShowCallout:YES];//设置大头针气泡可以显示
+//    */
+//    return pinAnnotationView;
+    
+    //自定义地图标注功能
     static NSString *PID = @"pid";
-    MKPinAnnotationView *pinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:PID];
-    if (!pinAnnotationView) {
-        pinAnnotationView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:PID];
-        
-        [pinAnnotationView setPinColor:MKPinAnnotationColorGreen];//大头针颜色
-        [pinAnnotationView setAnimatesDrop:YES];//大头针下落效果
-        [pinAnnotationView setCanShowCallout:YES];//设置大头针气泡可以显示
+    myAnnotationView *MYAnnotationView = (myAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:PID];
+    if (!MYAnnotationView) {
+        MYAnnotationView = [[myAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:PID];
+        [MYAnnotationView setImage:[UIImage imageNamed:@"mapIndicator"]];
     }
-    //MKPinAnnotationView *pinAnnotationView = [[MKPinAnnotationView alloc]init];
-   /* [pinAnnotationView setPinColor:MKPinAnnotationColorGreen];//大头针颜色
-    [pinAnnotationView setAnimatesDrop:YES];//大头针下落效果
-    [pinAnnotationView setCanShowCallout:YES];//设置大头针气泡可以显示
-    */
-    return pinAnnotationView;
+    return MYAnnotationView;
 }
 
 
 
 #pragma mark MapViewDelegate
+
+//添加标注时调用
+-(void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    
+}
+//标注被选中时调用此方法
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    
+}
+//标注失去焦点时调用此方法
+-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    
+}
+
 //地图显示区域将要发生改变时执行,可用来判断经纬度是否在显示区域内
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
 {

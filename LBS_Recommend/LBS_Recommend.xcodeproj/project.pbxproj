@@ -13,6 +13,7 @@
 		51041A2A1D7BC8EC0098F1CC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51041A291D7BC8EC0098F1CC /* Images.xcassets */; };
 		51041A2D1D7BC8EC0098F1CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51041A2B1D7BC8EC0098F1CC /* LaunchScreen.xib */; };
 		51041A391D7BC8EC0098F1CC /* LBS_RecommendTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 51041A381D7BC8EC0098F1CC /* LBS_RecommendTests.m */; };
+		51041A4B1D7C87A80098F1CC /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51041A4A1D7C87A80098F1CC /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		51041A321D7BC8EC0098F1CC /* LBS_RecommendTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LBS_RecommendTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51041A371D7BC8EC0098F1CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51041A381D7BC8EC0098F1CC /* LBS_RecommendTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LBS_RecommendTests.m; sourceTree = "<group>"; };
+		51041A4A1D7C87A80098F1CC /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				51041A211D7BC8EC0098F1CC /* AppDelegate.m */,
 				51041A231D7BC8EC0098F1CC /* ViewController.h */,
 				51041A241D7BC8EC0098F1CC /* ViewController.m */,
+				51041A4A1D7C87A80098F1CC /* Storyboard.storyboard */,
 				51041A291D7BC8EC0098F1CC /* Images.xcassets */,
 				51041A2B1D7BC8EC0098F1CC /* LaunchScreen.xib */,
 				51041A1C1D7BC8EC0098F1CC /* Supporting Files */,
@@ -198,6 +201,7 @@
 			files = (
 				51041A2D1D7BC8EC0098F1CC /* LaunchScreen.xib in Resources */,
 				51041A2A1D7BC8EC0098F1CC /* Images.xcassets in Resources */,
+				51041A4B1D7C87A80098F1CC /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

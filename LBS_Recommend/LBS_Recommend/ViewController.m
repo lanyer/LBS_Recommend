@@ -9,7 +9,11 @@
 #import "ViewController.h"
 #import <MapKit/MapKit.h>
 
-@interface ViewController ()<MKMapViewDelegate>
+@interface ViewController ()<CLLocationManagerDelegate>
+@property(nonatomic,strong) MKMapView *mapView;
+@property(nonatomic,strong) CLLocationManager *locationManager;
+@property(nonatomic,strong) UITextField *textField;
+
 
 @end
 
@@ -17,101 +21,137 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //创建一个MKMapView视图
-    MKMapView *mapView = [[MKMapView alloc]initWithFrame:self.view.bounds];
-    [self.view addSubview:mapView];
-    [mapView setDelegate:self];
+    self.mapView = [[MKMapView alloc]initWithFrame:self.view.bounds];
+    [self.mapView setMapType:MKMapTypeStandard];
+    //[self.mapView setShowsUserLocation:YES];//位置在地图上可见
+    [self.view addSubview:self.mapView];
     
-    //地图参数
-    [mapView setMapType:MKMapTypeStandard];//地图类型
+    self.textField = [[UITextField alloc]initWithFrame:CGRectMake(40, 30, 200, 30)];
+    [self.textField setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.textField];
     
-    [mapView setZoomEnabled:YES];//地图缩放
-    [mapView setScrollEnabled:YES];//地图移动
-    [mapView setRotateEnabled:YES];//地图旋转
+    UIButton *btn =[UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(250, 30, 70, 30);
+    [btn setBackgroundColor:[UIColor clearColor]];
+    [btn addTarget:self action:@selector(PressedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:@"search" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:btn];
     
-    //设施地图显示区域 北工大经纬度：116.486297,39.877492 ;北工大东门经纬度: 116.486554,39.891103
-    
-    //通过缩放比例（跨度）显示区域
-    //MKCoordinateRegion region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(39.877492, 116.486297), MKCoordinateSpanMake(0.1, 0.1));
-    
-    //通过距离显示区域，根据距离显示，以中心为基本点，米为单位，半径1000，上下左右则为2000
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(39.877492, 116.486297), 2000, 2000);
-    [mapView setRegion:[mapView regionThatFits:region]];//regionThatFits 使得地图更加适合屏幕
-    
-    //地图标注
-    CLLocationCoordinate2D coordinate2D = CLLocationCoordinate2DMake(39.877492, 116.486297);
-    CLLocationCoordinate2D coordinate2d = CLLocationCoordinate2DMake(39.891103, 116.486554);
-//    CLLocationCoordinate2D  coordinate2D;
-//    coordinate2D.latitude = 39.877492;
-//    coordinate2D.longitude = 116.486297;
-    MKPointAnnotation * pointAnnotation1 = [[MKPointAnnotation alloc]init];
-    [pointAnnotation1 setTitle:@"当前位置"];
-    [pointAnnotation1 setSubtitle:@"位置说明"];
-    [pointAnnotation1 setCoordinate:coordinate2D];
-    
-    //设置多个大头针
-    MKPointAnnotation * pointAnnotation2 = [[MKPointAnnotation alloc]init];
-    [pointAnnotation2 setTitle:@"当前位置"];
-    [pointAnnotation2 setSubtitle:@"位置说明"];
-    [pointAnnotation2 setCoordinate:coordinate2d];
-    
-    NSArray *pointAnnotations = @[pointAnnotation1,pointAnnotation2];
-    [mapView addAnnotations:pointAnnotations];
-    [mapView selectAnnotation:pointAnnotation1 animated:YES];//无需点击大头针  就显示气泡 
-}
-
-//通过代理设置地图标注（大头针）属性
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-    //如果创建多个大头针 通过代理进行优化 减少内存占用空间
-    static NSString *PID = @"pid";
-    MKPinAnnotationView *pinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:PID];
-    if (!pinAnnotationView) {
-        pinAnnotationView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:PID];
-        
-        [pinAnnotationView setPinColor:MKPinAnnotationColorGreen];//大头针颜色
-        [pinAnnotationView setAnimatesDrop:YES];//大头针下落效果
-        [pinAnnotationView setCanShowCallout:YES];//设置大头针气泡可以显示
+    //检查定位功能是否开启
+    if ([CLLocationManager locationServicesEnabled ])
+    {
+        if (!self.locationManager)
+        {
+            self.locationManager = [[CLLocationManager alloc]init];
+            [self.locationManager setDelegate:self];
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+            [self.locationManager setDistanceFilter:10];
+            [self.locationManager startUpdatingLocation];
+            
+            if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+            {
+                [self.locationManager requestWhenInUseAuthorization];
+                [self.locationManager requestAlwaysAuthorization];
+            }
+        }
     }
-    //MKPinAnnotationView *pinAnnotationView = [[MKPinAnnotationView alloc]init];
-   /* [pinAnnotationView setPinColor:MKPinAnnotationColorGreen];//大头针颜色
-    [pinAnnotationView setAnimatesDrop:YES];//大头针下落效果
-    [pinAnnotationView setCanShowCallout:YES];//设置大头针气泡可以显示
-    */
-    return pinAnnotationView;
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"定位服务并未开启" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
-
-
-#pragma mark MapViewDelegate
-//地图显示区域将要发生改变时执行,可用来判断经纬度是否在显示区域内
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
-{
-//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"地图区域即将发生改变" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"ok", nil];
-//    [alertView show];
-}
-//地图区域发生改变
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"地图区域发生改变" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"ok", nil];
-//    [alertView show];
+//点击button(search)之后执行的方法
+-(void)PressedBtn:(id)sender{
+    [self.textField resignFirstResponder];
+    if (self.textField.text.length == 0) {
+        return;
+    }
+    [self Geocorder:self.textField.text];//地理编码调用 将文本框内容text 给地理编码中的 str
 }
 
-//地图开始载入执行
-- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
+#pragma mark CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    
-}
-//地图载入完成后执行
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    
-}
-- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
-{
-    NSLog(@"error is %@",[error description]);
+    switch (status) {
+        case kCLAuthorizationStatusDenied:
+        {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"您已拒绝定位服务" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation * location = locations.lastObject;
+    [self reverseGeocoder:location];//反地理编码调用
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"error = %@",[error description]);
+}
+
+#pragma mark CLGeocoder
+//反地理编码
+-(void)reverseGeocoder:(CLLocation *)currentLocation
+{
+    CLGeocoder *geocoder = [[CLGeocoder alloc]init];
+   [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+    {
+       if (error || placemarks.count == 0)
+       {
+           NSLog(@"error=%@",[error description]);
+       }
+       else
+       {
+           //通过placemarks 得到当前经纬度等信息
+           CLPlacemark *placemark = placemarks.firstObject;
+           MKCoordinateRegion coordinateRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(placemark.location.coordinate.latitude, placemark.location.coordinate.longitude), MKCoordinateSpanMake(0.1, 0.1));
+           [self.mapView setRegion:[self.mapView regionThatFits:coordinateRegion] animated:YES];
+           
+           MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc]init];
+           [pointAnnotation setTitle:placemark.name];
+           [pointAnnotation setCoordinate:CLLocationCoordinate2DMake(placemark.location.coordinate.latitude, placemark.location.coordinate.longitude)];
+           [self.mapView addAnnotation:pointAnnotation];
+          // NSLog(@"placemark = %@",[[placemark addressDictionary ]objectForKey:@"City"]);
+       }
+   }];
+}
+
+//地理编码
+-(void)Geocorder:(NSString *)str
+{
+    CLGeocoder *geocoder = [[CLGeocoder alloc]init];
+    [geocoder geocodeAddressString:str completionHandler:^(NSArray *placemarks, NSError *error)
+    {
+        if (error || placemarks.count == 0)
+        {
+            NSLog(@"error=%@",[error description]);
+        }
+        else
+        {
+            CLPlacemark *placemark = placemarks.firstObject;
+            MKCoordinateRegion coordinateRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(placemark.location.coordinate.latitude, placemark.location.coordinate.longitude), MKCoordinateSpanMake(0.1, 0.1));
+            [self.mapView setRegion:[self.mapView regionThatFits:coordinateRegion] animated:YES];
+            
+            MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc]init];
+            [pointAnnotation setTitle:placemark.name];
+            [pointAnnotation setCoordinate:CLLocationCoordinate2DMake(placemark.location.coordinate.latitude, placemark.location.coordinate.longitude)];
+            [self.mapView addAnnotation:pointAnnotation];
+            // NSLog(@"placemark = %@",[[placemark addressDictionary ]objectForKey:@"City"]);
+        }
+
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -1,13 +1,13 @@
 //
-//  ViewController.h
+//  MapViewController.h
 //  LBS_Recommend
 //
-//  Created by lanyer on 16/9/13.
+//  Created by lanyer on 16/9/14.
 //  Copyright (c) 2016年 lanyer. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface MapViewController : UIViewController
 
 @end
